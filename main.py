@@ -20,6 +20,7 @@ def frame_to_ascii(frame, width, height):
 
 def run_curses(stdscr, video_path):
     curses.curs_set(0) 
+    stdscr.nodelay(1)
     cap = cv2.VideoCapture(video_path)
 
     if not cap.isOpened():
@@ -33,6 +34,9 @@ def run_curses(stdscr, video_path):
     max_x -= 1
 
     while cap.isOpened():
+        if stdscr.getch() == ord('q'):
+            break
+
         ret, frame = cap.read()
         if not ret:
             break
